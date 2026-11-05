@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import type { Customer } from "../types/Customer";
+import { Link } from "react-router";
 
 type CustomerListProps = {
   list?: Customer[];
@@ -68,6 +69,13 @@ export function CustomersList() {
       <h2 className="h2 mb-3">Listagem de Clientes</h2>
 
       <p className="text-secondary">Total de clientes: {customers.length}</p>
+
+      <div className="text-end mb-3">
+        <Link to={`/customers/new`} className="btn btn-outline-primary">
+          Novo cliente
+        </Link>
+      </div>
+
       <div className="table-responsive">
         <table className="table table-striped table-hover align-middle">
           <thead className="table-dark">
@@ -79,19 +87,31 @@ export function CustomersList() {
               <th scope="col">Telefone</th>
               <th scope="col">Município</th>
               <th scope="col">UF</th>
+              <th scope="col" className="text-end">
+                Ações
+              </th>
             </tr>
           </thead>
 
           <tbody>
-            {customers.map((list) => (
-              <tr key={list.id}>
-                <td>{list.id}</td>
-                <td>{list.name}</td>
-                <td>{list.ident_document}</td>
-                <td>{list.email}</td>
-                <td>{list.phone}</td>
-                <td>{list.municipality}</td>
-                <td>{list.state}</td>
+            {customers.map((customer) => (
+              <tr key={customer.id}>
+                <td>{customer.id}</td>
+                <td>{customer.name}</td>
+                <td>{customer.ident_document}</td>
+                <td>{customer.email}</td>
+                <td>{customer.phone}</td>
+                <td>{customer.municipality}</td>
+                <td>{customer.state}</td>
+                <td className="text-end">
+                  <Link
+                    to={`/customers/${customer.id}`}
+                    className="btn btn-outline-primary"
+                    aria-label={`Editar cliente ${customer.name}`}
+                  >
+                    Editar
+                  </Link>
+                </td>
               </tr>
             ))}
 
